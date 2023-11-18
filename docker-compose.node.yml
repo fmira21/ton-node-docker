@@ -2,6 +2,11 @@ version: '3.7'
 
 services:
   ton-node:
+    build:
+      context: build
+      dockerfile: Dockerfile.node
+      args:
+        VER: ${NODE_VERSION}
     image: ton-node:${NODE_VERSION}
     restart: always
     ports:
@@ -22,7 +27,12 @@ services:
         ipv4_address: 172.18.0.2
 
   ton-api:
-    image: ton-api:${API_VERSION}
+    build:
+      context: build
+      dockerfile: Dockerfile.api-local
+      args:
+        VER: ${API_VERSION}
+    image: ton-api
     restart: always
     ports:
       - 8081:8081
@@ -38,6 +48,7 @@ services:
       TON_API_GET_METHODS_ENABLED: ${API_GET_METHODS_ENABLED}
       TON_API_JSON_RPC_ENABLED: ${API_JSON_RPC_ENABLED}
       TON_API_ROOT_PATH: ${API_ROOT_PATH}
+    command: -c "gunicorn -k uvicorn.workers.UvicornWorker -w 1 --bind 0.0.0.0:8081 pyTON.main:app"
     networks:
       ton-network:
         ipv4_address: 172.18.0.3

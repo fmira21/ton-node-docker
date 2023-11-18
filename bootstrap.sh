@@ -4,15 +4,15 @@ set_ip () {
   TON_NODE_IP=$(curl -s https://ipinfo.io/ip)
 }
 
-build_node () {
-    docker build -t ton-node --build-arg VER=${NODE_VERSION} -f Dockerfile.node ./build
+deploy_node () {
+    docker-compose -f docker-compose.node.yml up -d ton-node
 }
 
-build_api () {
-    docker build -t ton-node --build-arg VER=${API_VERSION} -f Dockerfile.api ./build
+set_http_api_key () {
+    python -c 'import codecs; f=open("${NODE_STATE_VOLUME}/liteserver.pub", "rb+"); pub=f.read()[4:]; print(str(codecs.encode(pub,"base64")).replace("\n","")[2:46])'
 }
 
 set_ip
 source .env
-build_node
-build_api
+deploy_node
+set_http_api_key

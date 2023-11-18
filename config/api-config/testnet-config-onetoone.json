@@ -1,11 +1,11 @@
 {
 	"liteservers": [
   	{
-    	"ip": {{ node_ip_long }},
+    	"ip": 2886860802,
       "port": 43679,
       "id": {
         "@type": "pub.ed25519",
-        "key": "{{ http_api_key }}"
+        "key": "NODEAPIKEY"
       }
     }
 	],
