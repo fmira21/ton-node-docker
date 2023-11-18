@@ -1,18 +1,12 @@
-FROM python:3.9-alpine as builder
-
+FROM python:3.9-bullseye
 ARG VER
-
-RUN apk update && apk upgrade && apk add git \
-            gcc \
-            libc-dev \
-            glibc
-
-RUN apk add libcrypto1.1
-
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y git \
+                        gcc \
+                        libc-dev \
+                        libssl1.1
 RUN git clone --branch v${VER} https://github.com/toncenter/ton-http-api.git
-
 WORKDIR /ton-http-api/ton-http-api
-
 RUN pip --cert /usr/local/share/ca-certificates/NetSkopeCA.pem --trusted-host pypi.org install --no-cache-dir -r requirements.txt
-
 ENTRYPOINT [ "/bin/sh" ]

@@ -29,7 +29,7 @@ services:
   ton-api:
     build:
       context: build
-      dockerfile: Dockerfile.api-local
+      dockerfile: Dockerfile.api
       args:
         VER: ${API_VERSION}
     image: ton-api
