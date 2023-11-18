@@ -1,0 +1,50 @@
+version: '3.7'
+
+services:
+  ton-node:
+    image: ton-node:${NODE_VERSION}
+    restart: always
+    ports:
+      - 43678:43678
+      - 43678:43678/udp
+      - 43679:43679
+      - 43679:43679/udp
+    volumes:
+      - ${NODE_STATE_VOLUME}:/var/ton-work/db
+      - ${NODE_LOG_VOLUME}:/var/ton-work/log
+    environment:
+      GCONFURL: ${NODE_CONFIG_URL}
+      PUBLIC_IP: ${NODE_PUBLIC_IP}
+      LITESERVER: ${NODE_LITESERVER}
+      LITE_PORT: ${NODE_LITESERVER_PORT}
+    networks:
+      ton-network:
+        ipv4_address: 172.18.0.2
+
+  ton-api:
+    image: ton-api:${API_VERSION}
+    restart: always
+    ports:
+      - 8081:8081
+    volumes:
+      - ${API_CONF_VOLUME}:/conf
+    environment:
+      TON_API_CACHE_ENABLED: ${API_CACHE_ENABLED}
+      TON_API_LOGS_JSONIFY: ${API_LOGS_JSONIFY}
+      TON_API_LOGS_LEVEL: ${API_LOGS_LEVEL}
+      TON_API_TONLIB_LITESERVER_CONFIG: ${API_TONLIB_LITESERVER_CONFIG}
+      TON_API_TONLIB_PARALLEL_REQUESTS_PER_LITESERVER: ${API_TONLIB_PARALLEL_REQUESTS_PER_LITESERVER}
+      TON_API_TONLIB_REQUEST_TIMEOUT: ${API_TONLIB_REQUEST_TIMEOUT}
+      TON_API_GET_METHODS_ENABLED: ${API_GET_METHODS_ENABLED}
+      TON_API_JSON_RPC_ENABLED: ${API_JSON_RPC_ENABLED}
+      TON_API_ROOT_PATH: ${API_ROOT_PATH}
+    networks:
+      ton-network:
+        ipv4_address: 172.18.0.3
+
+networks:
+  ton-network:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 172.18.0.0/24

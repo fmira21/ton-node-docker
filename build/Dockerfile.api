@@ -1,0 +1,17 @@
+FROM ubuntu:20.04
+
+ARG VER
+
+RUN apt-get update
+RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get -y install tzdata
+RUN apt-get install -y git cmake wget python3 python3-pip
+
+USER root
+
+RUN git clone --branch v${VER} https://github.com/toncenter/ton-http-api.git
+
+WORKDIR /ton-http-api/ton-http-api
+
+RUN python3 -m pip install --no-cache-dir -r requirements.txt
+
+ENTRYPOINT [ "gunicorn -k uvicorn.workers.UvicornWorker -w 1 --bind 0.0.0.0:8081 pyTON.main:app" ]
