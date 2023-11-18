@@ -37,4 +37,4 @@ COPY --from=builder /ton/docker/init.sh ./
 COPY --from=builder /ton/docker/control.template ./ 
 RUN chmod +x init.sh
 
-ENTRYPOINT ["/var/ton-work/db/init.sh"]
+ENTRYPOINT [ "/var/ton-work/db/init.sh" ]
