@@ -23,6 +23,7 @@ deploy_api () {
 
 set_ip
 source .env
+build_all
 deploy_node
 set_http_api_key
 deploy_api
