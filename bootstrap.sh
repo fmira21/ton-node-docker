@@ -14,7 +14,7 @@ deploy_node () {
 
 set_http_api_key () {
   NODE_API_KEY=$(docker run --r -v $NODE_STATE_VOLUME:/state python python -c 'import codecs; f=open('/state/liteserver.pub', "rb+"); pub=f.read()[4:]; print(str(codecs.encode(pub,"base64")).replace("\n","")[2:46])')
-  sed -i -e 's/NODEAPIKEY/'"$NODE_API_KEY"'/g' ./config/api-config/${API_NETWORK}-config-${API_MODE}.json
+  sed -i -e 's/NODEAPIKEY/'"$NODE_API_KEY"'/g' ${API_CONF_VOLUME}/${API_NETWORK}-config-${API_MODE}.json
 }
 
 deploy_api () {
