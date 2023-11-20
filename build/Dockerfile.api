@@ -8,5 +8,5 @@ RUN apt-get update && \
                         libssl1.1
 RUN git clone --branch v${VER} https://github.com/toncenter/ton-http-api.git
 WORKDIR /ton-http-api/ton-http-api
-RUN pip --cert /usr/local/share/ca-certificates/NetSkopeCA.pem --trusted-host pypi.org install --no-cache-dir -r requirements.txt
+RUN pip --trusted-host pypi.org install --no-cache-dir -r requirements.txt
 ENTRYPOINT [ "/bin/sh" ]
