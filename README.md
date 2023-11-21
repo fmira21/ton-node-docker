@@ -1,4 +1,4 @@
-# Telegram Open Network: Full node and Toncenter API, dockerised
+# The Open Network: Full node and Toncenter API, dockerised
 
 This repository contains TON full node and Toncenter API builds unified into one Compose definition - to run as a service on any host machine.
 
