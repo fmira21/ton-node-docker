@@ -1,29 +1,31 @@
 #!/bin/bash
 
-set_ip () {
-  TON_NODE_IP=$(curl -s https://ipinfo.io/ip)
+build_all () {
+  docker-compose build
 }
 
-build_all () {
-  docker-compose -f docker-compose.node.yml build
+add_node_assets () {
+  mkdir $NODE_STATE_VOLUME
+  cp -a config/node-assets/. db/
 }
 
 deploy_node () {
-  docker-compose -f docker-compose.node.yml up -d ton-node
+  docker-compose up -d ton-node
 }
 
 set_http_api_key () {
-  NODE_API_KEY=$(docker run --r -v $NODE_STATE_VOLUME:/state python python -c 'import codecs; f=open('/state/liteserver.pub', "rb+"); pub=f.read()[4:]; print(str(codecs.encode(pub,"base64")).replace("\n","")[2:46])')
-  sed -i -e 's/NODEAPIKEY/'"$NODE_API_KEY"'/g' ${API_CONF_VOLUME}/${API_NETWORK}-config-${API_MODE}.json
+  NODE_API_KEY=$(docker run --rm -v $API_CONF_VOLUME:/conf -v $NODE_STATE_VOLUME/liteserver.pub:/liteserver/liteserver.pub ton-api -c "python /conf/generate-api-key.py")
+  sed -i "s~NODEAPIKEY~$NODE_API_KEY~g" ${API_CONF_VOLUME}/${API_NETWORK}-config-${API_MODE}.json
 }
 
 deploy_api () {
-  docker-compose -f docker-compose.node.yml up -d ton-api
+  docker-compose up -d ton-api
 }
 
-set_ip
+export TON_NODE_IP=$(curl -s https://ipinfo.io/ip)
 source .env
 build_all
+add_node_assets
 deploy_node
 set_http_api_key
 deploy_api

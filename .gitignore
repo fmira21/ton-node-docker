@@ -2,3 +2,7 @@ docker-compose.aux.yml
 build/Dockerfile.metrics
 build/*-local
 local-build
+*-bck
+db
+logs
+node-api-key
