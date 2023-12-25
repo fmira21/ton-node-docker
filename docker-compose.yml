@@ -39,7 +39,6 @@ services:
       - 8081:8081
     volumes:
       - ${API_CONF_VOLUME}:/conf
-      - ${NODE_STATE_VOLUME}/liteserver.pub:/liteserver/liteserver.pub
     environment:
       TON_API_CACHE_ENABLED: ${API_CACHE_ENABLED}
       TON_API_LOGS_JSONIFY: ${API_LOGS_JSONIFY}

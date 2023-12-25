@@ -2,7 +2,7 @@
 set -e
 
 build_all () {
-  docker-compose build
+  docker compose build
 }
 
 add_node_assets () {
@@ -11,7 +11,7 @@ add_node_assets () {
 }
 
 deploy_node () {
-  docker-compose up -d ton-node
+  docker compose up -d ton-node
 }
 
 set_http_api_key () {
@@ -20,7 +20,7 @@ set_http_api_key () {
 }
 
 deploy_api () {
-  docker-compose up -d ton-api
+  docker compose up -d ton-api
 }
 
 export TON_NODE_IP=$(curl -s https://ipinfo.io/ip)
