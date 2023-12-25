@@ -6,7 +6,7 @@ build_all () {
 
 add_node_assets () {
   mkdir $NODE_STATE_VOLUME
-  cp -a config/node-assets/. db/
+  cp -a config/node-assets/. $NODE_STATE_VOLUME
 }
 
 deploy_node () {
