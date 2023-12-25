@@ -128,3 +128,11 @@ This warning always appears during initial node start. Just wait until the node 
 ```
 
 If you see that some of workers other than `000` (your node) are dead - this means, these nodes are not accessible. This situation is not critical, so far there are accessible workers in the list including your node. Still, consider updating API configs from time to time.
+
+## Checked on...
+
+This setup works correctly with following software:
+
+- Docker Compose v2.15.1
+- Docker v20.10.23, build 7155243
+- MacOS Sonoma 14.0 (Apple M1)
