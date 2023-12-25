@@ -92,6 +92,10 @@ Then, just wait until your node is synchronised with the chain.
 
 To interact with the API, refer to the [Toncenter API reference](https://toncenter.com/api/v2/).
 
+## Updating the node
+
+Just lift the release version in the `NODE_VERSION` variable of the `.env` file.
+
 ## Troubleshooting
 
 1. Failed to parse config
