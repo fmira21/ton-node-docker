@@ -10,10 +10,10 @@ services:
     image: ton-node:${NODE_VERSION}
     restart: always
     ports:
-      - ${NODE_CONSOLE_PORT}:${NODE_CONSOLE_PORT}
-      - ${NODE_CONSOLE_PORT}:${NODE_CONSOLE_PORT}/udp
-      - ${NODE_LITESERVER_PORT}:${NODE_LITESERVER_PORT}
-      - ${NODE_LITESERVER_PORT}:${NODE_LITESERVER_PORT}/udp
+      - 43678:43678
+      - 43678:43678/udp
+      - 43679:43679
+      - 43679:43679/udp
     volumes:
       - ${NODE_STATE_VOLUME}:/var/ton-work/db
       - ${NODE_LOG_VOLUME}:/var/ton-work/log
@@ -22,7 +22,6 @@ services:
       PUBLIC_IP: ${NODE_PUBLIC_IP}
       LITESERVER: ${NODE_LITESERVER}
       LITE_PORT: ${NODE_LITESERVER_PORT}
-      CONSOLE_PORT: ${NODE_CONSOLE_PORT}
     networks:
       ton-network:
         ipv4_address: 172.18.0.2
@@ -39,7 +38,6 @@ services:
       - 8081:8081
     volumes:
       - ${API_CONF_VOLUME}:/conf
-      - ${NODE_STATE_VOLUME}/liteserver.pub:/liteserver/liteserver.pub
     environment:
       TON_API_CACHE_ENABLED: ${API_CACHE_ENABLED}
       TON_API_LOGS_JSONIFY: ${API_LOGS_JSONIFY}

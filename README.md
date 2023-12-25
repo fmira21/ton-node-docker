@@ -16,8 +16,8 @@ TON node works in the full mode by default.
 
 The API service can be configured to work in two modes:
 
-- one-to-one (`onetoone`) - interacting with your node only;
-- one-to-many (`onetomany`) - interacting with a set of nodes including your node.
+- one-to-one - interacting with your node only;
+- one-to-many - interacting with a set of nodes including your node.
 
 ## Prerequisites
 
@@ -32,12 +32,6 @@ As per my experience, following hardware requirements are applicable for both Te
 
 For further details, refer to the [official requirements](https://docs.ton.org/participate/run-nodes/full-node#:~:text=Hardware%20requirements%E2%80%8B&text=You%20need%20a%20machine%20with,a%20TON%20Blockchain%20Full%20Node.).
 
-For MacOS, install `gnu-sed` to run the bootstrap script adequately:
-
-```
-brew install gnu-sed
-```
-
 ## Configuration
 
 Both node and API are configured via the `.env` file.
@@ -47,14 +41,13 @@ In the **node part** of the file, you will find following parameters:
 | Variable | Description | Default value |
 | -------- | ----------- | ------------- |
 | `NODE_VERSION` | Release version of the TON node | `2023.10` |
-| `NODE_CONF_VOLUME` | External volume to store node configuration files | `${PWD}/config/node-config` |
-| `NODE_LOG_VOLUME` | External volume to store node logs | `${PWD}/logs` |
-| `NODE_STATE_VOLUME` | External volume to store the node DB | `${PWD}/db` |
+| `NODE_CONF_VOLUME` | External volume to store node configuration files | `./config/node-config` |
+| `NODE_LOG_VOLUME` | External volume to store node logs | `./logs` |
+| `NODE_STATE_VOLUME` | External volume to store the node DB | `./db` |
 | `NODE_CONFIG_URL` | Node config URL to download (find current config versions for Testnet and Mainnet below) | Testnet config |
 | `NODE_PUBLIC_IP` | External public IP of your host to advertise the node on. This IP can be fetched automatically by `bootstrap.sh` | `TON_NODE_IP` environment variable |
 | `NODE_LITESERVER` | Enable liteserver mode | `true` |
 | `NODE_LITESERVER_PORT` | Node liteserver port | `43679` |
-| `NODE_CONSOLE_PORT` | Node control plane port | `43678` |
 
 In the **API part** of the file, you can set following HTTP API parameters:
 
@@ -63,7 +56,7 @@ In the **API part** of the file, you can set following HTTP API parameters:
 | `API_VERSION` | Release version of TON HTTP API | `2.0.31` |
 | `API_NETWORK` | API network corresponding with your node | `testnet` |
 | `API_MODE` | API interaction mode as above: `onetoone` or `onetomany` | `onetoone` |
-| `API_CONF_VOLUME` | External volume to store API configs | `${PWD}/config/api-config` |
+| `API_CONF_VOLUME` | External volume to store API configs | `./config/api-config` |
 | `API_CACHE_ENABLED` | Set `1` to enable API cache | `0` |
 | `API_LOGS_JSONIFY` | Set `1` to get logs in the JSON format | `0` |
 | `API_LOGS_LEVEL` | API log level | `ERROR` |
@@ -91,36 +84,3 @@ This script will perform following operations:
 Then, just wait until your node is synchronised with the chain.
 
 To interact with the API, refer to the [Toncenter API reference](https://toncenter.com/api/v2/).
-
-## Troubleshooting
-
-1. Failed to parse config
-
-`ton-node` logs:
-
-```
-[ 1][t 1][2023-12-24 23:20:03.489683013][validator-engine.cpp:3517][!validator-engine]	failed to parse config: [Error : 0 : failed to parse json: Unexpected symbol while parsing JSON Object]
-```
-
-If you see this error, check the downloaded and initialised `config.json` for syntax glitches. Change the file itself or the `init.sh` script accordingly. After this, you can either restart the node via Compose or bootstrap it again: in case you changed `init.sh`, remove the existing config and allow to reinitialise it via the script.
-
-2. No nodes in the network
-
-`ton-node` logs:
-
-```
-[ 2][t 6][2023-12-24 23:56:21.137193799][manager-init.cpp:86][!downloadproofreq]	failed to download proof link: [Error : 651 : no nodes]
-```
-
-This warning always appears during initial node start. Just wait until the node starts to sync.
-
-3. Dead workers in `onetomany` mode
-
-`ton-api` logs:
-
-```
-2023-12-25 10:49:47.910 | ERROR    | pyTON.manager:check_children_alive:232 - TonlibWorker #XXX is dead!!! Exit code: 12
-2023-12-25 10:49:57.968 | ERROR    | pyTON.worker:report_last_block:118 - TonlibWorker #000 report_last_block exception of type LiteServerTimeout: LITE_SERVER_NETWORKadnl query timeout
-```
-
-If you see that some of workers other than `000` (your node) are dead - this means, these nodes are not accessible. This situation is not critical, so far there are accessible workers in the list including your node. Still, consider updating API configs from time to time.
