@@ -40,6 +40,8 @@ brew install gnu-sed
 
 ## Configuration
 
+> **NB**: The `TON_NODE_IP` environment variable is fetched via an external resource. In case you need anything different, just remove the `export TON_NODE_IP` definition from `bootstrap.sh` and set `TON_NODE_IP` manually instead.
+
 Both node and API are configured via the `.env` file.
 
 In the **node part** of the file, you will find following parameters:
