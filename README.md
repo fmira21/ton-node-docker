@@ -38,6 +38,8 @@ For MacOS, install `gnu-sed` to run the bootstrap script adequately:
 brew install gnu-sed
 ```
 
+Then, use `gsed` instead of `sed` in `bootstrap.sh`.
+
 ## Configuration
 
 > **NB**: The `TON_NODE_IP` environment variable is fetched via an external resource. In case you need anything different, just remove the `export TON_NODE_IP` definition from `bootstrap.sh` and set `TON_NODE_IP` manually instead.

@@ -6,12 +6,13 @@ build_all () {
 }
 
 add_node_assets () {
-  mkdir $NODE_STATE_VOLUME
+  mkdir -p $NODE_STATE_VOLUME
   cp -a config/node-assets/. $NODE_STATE_VOLUME
 }
 
 deploy_node () {
   docker compose up -d ton-node
+  sleep 5
 }
 
 set_http_api_key () {

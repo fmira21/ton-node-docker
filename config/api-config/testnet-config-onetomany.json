@@ -1,13 +1,13 @@
 {
 	"liteservers": [
-  	{
-    	"ip": 2886860802,
-      "port": 43679,
-      "id": {
-        "@type": "pub.ed25519",
-        "key": "NODEAPIKEY"
-      }
-    },
+		{
+			"ip": 2886860802,
+			"port": 43679,
+			"id": {
+				"@type": "pub.ed25519",
+				"key": "NODEAPIKEY"
+			}
+		},
 		{
 			"ip": 1592601963,
 			"port": 13833,
