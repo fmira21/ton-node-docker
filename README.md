@@ -23,14 +23,7 @@ The API service can be configured to work in two modes:
 
 To bootstrap and run the node, you have to install **Docker and Docker Compose** on your host.
 
-As per my experience, following hardware requirements are applicable for both Testnet and Mainnet full nodes:
-
-- 8-core CPU / vCPU's
-- 64 Gb RAM
-- <= 10 Gbps network bandwith
-- Static IP to advertise the node
-
-For further details, refer to the [official requirements](https://docs.ton.org/participate/run-nodes/full-node#:~:text=Hardware%20requirements%E2%80%8B&text=You%20need%20a%20machine%20with,a%20TON%20Blockchain%20Full%20Node.).
+For node system requirements, refer to the [official requirements](https://docs.ton.org/participate/run-nodes/full-node#:~:text=Hardware%20requirements%E2%80%8B&text=You%20need%20a%20machine%20with,a%20TON%20Blockchain%20Full%20Node.).
 
 For MacOS, install `gnu-sed` to run the bootstrap script adequately:
 
